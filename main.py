@@ -1,4 +1,5 @@
 from lib.network import NeuralNetwork
+import matplotlib.pyplot as plt
 import pandas 
 import numpy as np
 
@@ -26,5 +27,10 @@ _, train_m = train_X.shape
 
 print("[+] Data split. Training neural network")
 
-net = NeuralNetwork([784, 10, 10], train_X, train_Y, 1.2, 1000, m)
-net.train()
+net = NeuralNetwork([784, 10, 10], train_X, train_Y, 1.2, m)
+
+try:
+    net.train()
+except:
+    plt.plot(list(range(len(net.values))), net.values)
+    plt.show()

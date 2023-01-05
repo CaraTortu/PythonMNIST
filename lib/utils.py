@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 np.seterr(all='raise')
 
@@ -16,12 +15,8 @@ def dsigmoid(Z):
     return np.exp(-Z)/(np.exp(-Z)+1)**2
 
 def softmax(Z: np.ndarray):
-    try:
-        exp = np.exp(Z)
-        exp /= sum(exp, exp.size)
-    except:
-        print("[-] Learning rate is too high. Please lower it")
-        exit()
+    exp = np.exp(Z)
+    exp /= sum(exp, exp.size)
 
     return exp
 

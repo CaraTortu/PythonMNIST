@@ -1,10 +1,8 @@
 from lib.layer import Layer
 from lib.utils import *
 
-import matplotlib.pyplot as plt
-
 class NeuralNetwork:
-    def __init__(self, layerSizes: list, train_X, train_Y, alpha, it, m) -> None:
+    def __init__(self, layerSizes: list, train_X, train_Y, alpha, m) -> None:
         # Define layers
         self.inputLayer = Layer(layerSizes[0])
         self.layers = [Layer(i) for i in layerSizes[1:]]
@@ -15,7 +13,6 @@ class NeuralNetwork:
         
         # Variables for training
         self.alpha = alpha
-        self.it = it
         self.m = m
 
         # Initialise layer values
@@ -45,9 +42,10 @@ class NeuralNetwork:
 
                 print(f"Iter: {i} | acc: {acc}")
                 self.values.append(acc)
+
             i+=1
 
-    def forwardProp(self) -> np.ndarray:
+    def forwardProp(self):
         totalValue = self.train_X
 
         for layer in self.layers[:-1]:
@@ -57,7 +55,7 @@ class NeuralNetwork:
             
         self.layers[-1].A = softmax(self.layers[-1].weigths.dot(totalValue) + self.layers[-1].bias)
 
-    def backwardsProp(self) -> np.ndarray:
+    def backwardsProp(self):
         oneOverM = 1 / self.m
 
         dZoutput = self.layers[-1].A - OneHotEncoding(self.train_Y)
