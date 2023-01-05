@@ -27,3 +27,7 @@ net = NeuralNetwork([784, 10, 50, 10, 10], train_X, train_Y, 0.01, 10000, m)
 Here we added another two hidden layers where the first one is 10 neurons big and the second one 50 neurons big.
 
 If you get any weird warnings in the console it mean that the learning rate is too high (I spent hours figuring this out so I have you the hassle)
+
+Here is a performance graph when running it with no modifications:
+
+![image](https://user-images.githubusercontent.com/58831179/210806383-c6d131ed-20b1-4557-9b30-ee3924b56ecc.png)
