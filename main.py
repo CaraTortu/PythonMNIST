@@ -26,5 +26,5 @@ _, train_m = train_X.shape
 
 print("[+] Data split. Training neural network")
 
-net = NeuralNetwork([784, 10, 10], train_X, train_Y, 0.01, 10000, m)
+net = NeuralNetwork([784, 10, 10], train_X, train_Y, 1.2, 1000, m)
 net.train()

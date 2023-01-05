@@ -34,7 +34,9 @@ class NeuralNetwork:
         self.layers[-1].initParams(self.layers[-1])
 
     def train(self) -> None:
-        for i in range(self.it):
+        i = 0
+
+        while True:
             self.forwardProp()
             self.backwardsProp()
 
@@ -43,16 +45,14 @@ class NeuralNetwork:
 
                 print(f"Iter: {i} | acc: {acc}")
                 self.values.append(acc)
-
-        plt.plot(list(range(len(self.values))), self.values)
-        plt.show()
+            i+=1
 
     def forwardProp(self) -> np.ndarray:
         totalValue = self.train_X
 
         for layer in self.layers[:-1]:
             layer.Z = layer.weigths.dot(totalValue) + layer.bias
-            layer.A = ReLU(layer.Z)
+            layer.A = sigmoid(layer.Z)
             totalValue = layer.A
             
         self.layers[-1].A = softmax(self.layers[-1].weigths.dot(totalValue) + self.layers[-1].bias)
@@ -67,13 +67,10 @@ class NeuralNetwork:
         previous = self.layers[-1]
 
         for i, layer in list(enumerate(self.layers))[:-1][::-1]:
-            dZoutput = previous.weigths.T.dot(dZoutput) * dReLU(layer.Z)
+            dZoutput = previous.weigths.T.dot(dZoutput) * dsigmoid(layer.Z)
 
             todot = self.train_X.T if i == 0 else self.layers[i-1].A.T
 
             layer.weigths -= self.alpha * (oneOverM * dZoutput.dot(todot))
             layer.bias -= self.alpha * (oneOverM * np.sum(dZoutput))
             previous = layer
-
-    def getAccuracy(self) -> float:
-        return np.sum(np.argmax(self.layers[-1].A, 0) == self.train_Y) / self.train_Y.size
