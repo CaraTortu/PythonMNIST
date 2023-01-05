@@ -31,6 +31,6 @@ net = NeuralNetwork([784, 10, 10], train_X, train_Y, 1.2, m)
 
 try:
     net.train()
-except:
+except KeyboardInterrupt:
     plt.plot(list(range(len(net.values))), net.values)
     plt.show()
